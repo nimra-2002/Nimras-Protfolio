@@ -8,12 +8,12 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] })
 
 export default function Portfolio() {
   const [isDark, setIsDark] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   
 
   useEffect(() => {
     const saved = typeof window !== "undefined" ? localStorage.getItem("theme") : null
-    const preferDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-    const shouldDark = saved ? saved === "dark" : preferDark
+    const shouldDark = saved ? saved === "dark" : false
     setIsDark(shouldDark)
     document.documentElement.classList.toggle("dark", shouldDark)
   }, [])
@@ -29,7 +29,7 @@ export default function Portfolio() {
     <div className="min-h-screen bg-white text-gray-900 dark:bg-black dark:text-white" id="home">
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b dark:bg-black/70 dark:border-neutral-800">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 min-h-14 py-2 flex items-center justify-between">
           <a
             href="#home"
             onClick={(e) => { e.preventDefault(); document.querySelector("#home")?.scrollIntoView({ behavior: "smooth" }) }}
@@ -38,7 +38,8 @@ export default function Portfolio() {
           >
             Nimra Akram
           </a>
-          <nav className="flex items-center gap-3 sm:gap-6 text-sm font-medium text-gray-700 dark:text-gray-300 max-w-[70%] sm:max-w-none overflow-x-auto whitespace-nowrap scrollbar-none">
+          {/* Desktop nav */}
+          <nav className="hidden sm:flex items-center gap-3 sm:gap-6 text-sm font-medium text-gray-700 dark:text-gray-300">
             <a href="#home" onClick={(e) => { e.preventDefault(); document.querySelector("#home")?.scrollIntoView({ behavior: "smooth" }) }} className="hover:text-purple-600">Home</a>
             <a href="#about" onClick={(e) => { e.preventDefault(); document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }) }} className="hover:text-purple-600">About</a>
             <a href="#services" onClick={(e) => { e.preventDefault(); document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" }) }} className="hover:text-purple-600">Services</a>
@@ -53,7 +54,37 @@ export default function Portfolio() {
               )}
             </button>
           </nav>
+          {/* Mobile controls */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <button onClick={toggleTheme} aria-label="Toggle dark mode" className="h-9 w-9 rounded-md border border-gray-300 flex items-center justify-center hover:border-purple-500 hover:text-purple-600 transition-colors">
+              {isDark ? (
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-10.45-10.45 1 1 0 0 0-.14-1.05A1 1 0 0 0 8 1a10 10 0 1 0 15 15 1 1 0 0 0-.36-1.93Z"/></svg>
+              ) : (
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.79 1.8-1.79zm10.48 14.32l1.79 1.79 1.79-1.79-1.79-1.8-1.79 1.8zM12 4a1 1 0 0 0 1-1V1h-2v2a1 1 0 0 0 1 1zm0 16a1 1 0 0 0-1 1v2h2v-2a1 1 0 0 0-1-1zM4 13H1v-2h3v2zm22 0h-3v-2h3v2zM6.76 19.16l-1.8 1.79 1.8 1.79 1.79-1.79-1.79-1.79zM17.24 4.84l1.79-1.79-1.79-1.79-1.79 1.79 1.79 1.79zM12 6a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg>
+              )}
+            </button>
+            <button onClick={() => setIsMenuOpen(v => !v)} aria-label="Toggle menu" className="h-9 w-9 rounded-md border border-gray-300 flex items-center justify-center hover:border-purple-500 hover:text-purple-600 transition-colors">
+              {isMenuOpen ? (
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              ) : (
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+              )}
+            </button>
+          </div>
         </div>
+        {/* Mobile dropdown menu */}
+        {isMenuOpen && (
+          <div className="sm:hidden border-b border-t bg-white/95 dark:bg-black/90 dark:border-neutral-800">
+            <div className="max-w-6xl mx-auto px-6 py-3 grid gap-3 text-sm font-medium text-gray-800 dark:text-gray-200">
+              <a href="#home" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.querySelector('#home')?.scrollIntoView({ behavior: 'smooth' }) }} className="py-1">Home</a>
+              <a href="#about" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' }) }} className="py-1">About</a>
+              <a href="#services" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' }) }} className="py-1">Services</a>
+              <a href="#skills" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.querySelector('#skills')?.scrollIntoView({ behavior: 'smooth' }) }} className="py-1">Skills</a>
+              <a href="#projects" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }) }} className="py-1">Selected Projects</a>
+              <a href="#contact" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }) }} className="py-1">Contact</a>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -111,8 +142,8 @@ export default function Portfolio() {
           <div className="mx-auto mt-3 h-1 w-24 rounded-full bg-gradient-to-r from-purple-600 to-blue-600" />
           <div className="mt-16 grid lg:grid-cols-2 gap-12 items-stretch">
             {/* Left: Textual intro with signature */}
-            <div className="flex flex-col h-full">
-              <h3 className="text-2xl font-semibold text-black mb-4">Web Developer</h3>
+            <div className="flex flex-col h-full text-center lg:text-left max-w-prose mx-auto lg:mx-0">
+              <h3 className="text-2xl font-semibold text-black dark:text-white mb-4">Web Developer</h3>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-5">
                 Hi, I’m Nimra, a dedicated Web Developer passionate about building modern, responsive, and scalable web
                 applications. I work with React, Next.js, and Laravel to create seamless user experiences and robust backend solutions.
@@ -131,33 +162,33 @@ export default function Portfolio() {
 
             {/* Right: Personal info list */}
             <aside className="flex flex-col h-full lg:border-l lg:border-gray-200 lg:pl-10 dark:lg:border-neutral-800">
-              <h3 className="text-2xl font-bold text-black mb-6">Personal Information</h3>
-              <dl className="space-y-4 text-gray-700 dark:text-gray-300">
-                <div className={`grid grid-cols-[150px_1fr] gap-4 items-center ${poppins.className}`}>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500">Name</dt>
-                  <dd className="text-gray-800 dark:text-gray-200">Nimra Akram</dd>
+              <h3 className="text-2xl font-bold text-black dark:text-white mb-6 text-center lg:text-left">Personal Information</h3>
+              <dl className="space-y-4 text-gray-700 dark:text-gray-300 max-w-md mx-auto lg:mx-0 w-full">
+                <div className={`grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-1 sm:gap-4 items-start sm:items-center text-center sm:text-left ${poppins.className}`}>
+                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-white">Name</dt>
+                  <dd className="text-gray-800 dark:text-white">Nimra Akram</dd>
                 </div>
-                <div className={`grid grid-cols-[150px_1fr] gap-4 items-center ${poppins.className}`}>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500">City, Country</dt>
-                  <dd className="text-gray-800 dark:text-gray-200">Lahore, Pakistan</dd>
+                <div className={`grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-1 sm:gap-4 items-start sm:items-center text-center sm:text-left ${poppins.className}`}>
+                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-white">City, Country</dt>
+                  <dd className="text-gray-800 dark:text-white">Lahore, Pakistan</dd>
                 </div>
-                <div className={`grid grid-cols-[150px_1fr] gap-4 items-center ${poppins.className}`}>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500">Email</dt>
+                <div className={`grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-1 sm:gap-4 items-start sm:items-center text-center sm:text-left ${poppins.className}`}>
+                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-white">Email</dt>
                   <dd className="text-gray-800 dark:text-gray-200">
                     <a className="hover:underline" href="mailto:nimraakram268@gmail.com">nimraakram268@gmail.com</a>
                   </dd>
                 </div>
-                <div className={`grid grid-cols-[150px_1fr] gap-4 items-center ${poppins.className}`}>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500">Role / Profession</dt>
-                  <dd className="text-gray-800 dark:text-gray-200">Web Developer</dd>
+                <div className={`grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-1 sm:gap-4 items-start sm:items-center text-center sm:text-left ${poppins.className}`}>
+                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-white">Role / Profession</dt>
+                  <dd className="text-gray-800 dark:text-white">Web Developer</dd>
                 </div>
-                <div className={`grid grid-cols-[150px_1fr] gap-4 items-center ${poppins.className}`}>
-                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500">Freelance</dt>
-                  <dd className="text-gray-800 dark:text-gray-200">Available</dd>
+                <div className={`grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-1 sm:gap-4 items-start sm:items-center text-center sm:text-left ${poppins.className}`}>
+                  <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-white">Freelance</dt>
+                  <dd className="text-gray-800 dark:text-white">Available</dd>
                 </div>
               </dl>
 
-              <div className="mt-auto pt-6">
+              <div className="mt-6 lg:mt-auto pt-6 text-center lg:text-left">
                 <a
                   href="/CV.pdf"
                   download
@@ -237,57 +268,57 @@ export default function Portfolio() {
               </h3>
 
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     H
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">HTML5</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     C
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">CSS3</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-yellow-500 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     JS
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">JavaScript</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-cyan-500 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     R
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">React.js</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg">
-                  <div className="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     N
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Next.js</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-teal-50 dark:bg-teal-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-teal-500 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-teal-50 dark:bg-teal-900/20 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     T
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Tailwind</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     TS
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">TypeScript</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-sm">
+                <div className="flex items-center gap-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     B
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Bootstrap</span>
@@ -311,58 +342,42 @@ export default function Portfolio() {
 
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center text-white font-bold text-sm">
-                    N
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">N</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Node.js</span>
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-white font-bold text-sm">
-                    L
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">L</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Laravel</span>
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-blue-700 rounded flex items-center justify-center text-white font-bold text-sm">
-                    M
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">M</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">MySQL</span>
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-orange-600 rounded flex items-center justify-center text-white font-bold text-sm">
-                    G
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">G</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Git</span>
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg">
-                  <div className="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-white font-bold text-sm">
-                    GH
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">GH</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">GitHub</span>
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-sm">
-                    W
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">W</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">WordPress</span>
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-yellow-600 rounded flex items-center justify-center text-white font-bold text-sm">
-                    J
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">J</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">jQuery</span>
                 </div>
 
                 <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                  <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                    A
-                  </div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">A</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">AWS</span>
                 </div>
               </div>
