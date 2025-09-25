@@ -599,8 +599,20 @@ export default function Portfolio() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.08),transparent_60%)]" />
           <div className="relative max-w-6xl mx-auto px-6">
             <div className="text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">Contact Me</h2>
-              <div className="h-1 w-24 mx-auto bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mb-4" />
+              <div className="flex items-center justify-center gap-8 sm:gap-10 mb-4 sm:mb-6">
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Contact Me</h2>
+                <div className="relative rounded-full overflow-hidden w-28 h-28 sm:w-32 sm:h-32 border-4 border-black/90 shadow-lg">
+                  <Image
+                    src="/Contact%20img.png"
+                    alt="Contact avatar"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 112px, 128px"
+                    priority
+                  />
+                </div>
+              </div>
+              
               <p className="text-gray-600 dark:text-white mb-8 sm:mb-10">Interested in working with me? Let’s connect!</p>
             </div>
 

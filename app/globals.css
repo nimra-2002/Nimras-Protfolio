@@ -164,6 +164,11 @@
   animation: flashBack 1.2s ease-in-out both;
 }
 
+/* Slow spin utility for rotating rings */
+.animate-spin-slow {
+  animation: spin 6s linear infinite;
+}
+
 /* Hide scrollbars globally but keep scrolling functional */
 html, body {
   -ms-overflow-style: none; /* IE and old Edge */
