@@ -1,14 +1,18 @@
 "use client"
 import Image from "next/image"
-import { Poppins } from "next/font/google"
-import { Code2, Layout, BarChart3, RefreshCcw, Globe } from "lucide-react"
+import { Poppins, Dancing_Script, Great_Vibes } from "next/font/google"
+import { ArrowUp } from "lucide-react"
+import { Code2, Layout, BarChart3, RefreshCcw, Globe, Mail, Github, Linkedin } from "lucide-react"
 import { useEffect, useState } from "react"
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] })
+const dancingScript = Dancing_Script({ subsets: ["latin"], weight: ["700"] })
+const greatVibes = Great_Vibes({ subsets: ["latin"], weight: ["400"] })
 
 export default function Portfolio() {
   const [isDark, setIsDark] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
   
 
   useEffect(() => {
@@ -16,6 +20,15 @@ export default function Portfolio() {
     const shouldDark = saved ? saved === "dark" : false
     setIsDark(shouldDark)
     document.documentElement.classList.toggle("dark", shouldDark)
+  }, [])
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowScrollTop(window.scrollY > 300)
+    }
+    window.addEventListener('scroll', onScroll)
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const toggleTheme = () => {
@@ -33,10 +46,10 @@ export default function Portfolio() {
           <a
             href="#home"
             onClick={(e) => { e.preventDefault(); document.querySelector("#home")?.scrollIntoView({ behavior: "smooth" }) }}
-            className="font-extrabold tracking-tight text-gray-900 dark:text-white"
+            className={`text-gray-900 dark:text-white ${greatVibes.className} text-4xl sm:text-5xl leading-none`}
             aria-label="Go to home"
           >
-            Nimra Akram
+            Nimra
           </a>
           {/* Desktop nav */}
           <nav className="hidden sm:flex items-center gap-3 sm:gap-6 text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -103,7 +116,7 @@ export default function Portfolio() {
           {/* Title with side lines */}
           <div className="mt-3 flex items-center justify-center gap-3">
             <span className="hidden sm:block h-px w-16 bg-blue-500/60" />
-            <h2 className="text-xl sm:text-2xl font-semibold text-blue-600">Web Developer</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-[hsl(190,100%,45%)]">Web Developer</h2>
             <span className="hidden sm:block h-px w-16 bg-blue-500/60" />
           </div>
           <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-6">Transforming ideas into modern, scalable, and user-friendly web solutions</p>
@@ -255,7 +268,7 @@ export default function Portfolio() {
             <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
             {/* Frontend Technologies */}
             <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl p-8 shadow-sm">
-              <h3 className="text-2xl font-bold text-blue-600 mb-8 flex items-center gap-3">
+              <h3 className={"text-2xl sm:text-[28px] font-semibold tracking-tight leading-snug text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-3"}>
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -267,58 +280,58 @@ export default function Portfolio() {
                 Frontend Technologies
               </h3>
 
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     H
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">HTML5</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     C
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">CSS3</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     JS
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">JavaScript</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                <div className="flex items-center gap-3 p-3 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     R
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">React.js</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     N
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Next.js</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-teal-50 dark:bg-teal-900/20 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                <div className="flex items-center gap-3 p-3 bg-teal-50 dark:bg-teal-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     T
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Tailwind</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     TS
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">TypeScript</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg min-h-[64px]">
-                  <div className="flex-shrink-0 w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
+                <div className="flex items-center gap-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">
                     B
                   </div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Bootstrap</span>
@@ -328,7 +341,7 @@ export default function Portfolio() {
 
             {/* Backend & Other Technologies */}
             <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl p-8 shadow-sm">
-              <h3 className="text-2xl font-bold text-purple-600 mb-8 flex items-center gap-3">
+              <h3 className={"text-2xl sm:text-[28px] font-semibold tracking-tight leading-snug text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-3"}>
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -340,44 +353,44 @@ export default function Portfolio() {
                 Backend & Other
               </h3>
 
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">N</div>
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">N</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Node.js</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">L</div>
+                <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">L</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Laravel</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">M</div>
+                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">M</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">MySQL</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">G</div>
+                <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">G</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">Git</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">GH</div>
+                <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">GH</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">GitHub</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">W</div>
+                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">W</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">WordPress</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">J</div>
+                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">J</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">jQuery</span>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                  <div className="flex-shrink-0 w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">A</div>
+                <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg min-h-[56px] sm:min-h-[64px]">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#4d53fb] rounded-lg flex items-center justify-center text-white font-bold text-base dark:text-white">A</div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">AWS</span>
                 </div>
               </div>
@@ -704,13 +717,28 @@ export default function Portfolio() {
               <span className="text-gray-500 dark:text-gray-400 text-sm">Built with ❤️ using React & Tailwind</span>
             </div>
             <div className="flex items-center gap-4 text-sm">
-              <a href="mailto:nimraakram268@gmail.com" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Email</a>
-              <a href="https://linkedin.com/in/nimra-akram-21957325b" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">LinkedIn</a>
-              <a href="https://github.com/nimra-akram" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">GitHub</a>
+              <a href="mailto:nimraakram268@gmail.com" aria-label="Email" className="hover:opacity-90">
+                <Mail className="w-6 h-6 text-purple-600" />
+              </a>
+              <a href="https://linkedin.com/in/nimra-akram-21957325b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:opacity-90">
+                <Linkedin className="w-6 h-6 text-purple-600" />
+              </a>
+              <a href="https://github.com/nimra-akram" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:opacity-90">
+                <Github className="w-6 h-6 text-purple-600" />
+              </a>
             </div>
           </div>
         </div>
       </footer>
+      {showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Scroll to top"
+          className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-black text-white shadow-[0_8px_30px_rgba(0,0,0,0.45)] ring-2 ring-white/40 dark:ring-black/40 flex items-center justify-center hover:brightness-110 transition"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </button>
+      )}
     </div>
   )
 }
